@@ -9,13 +9,24 @@ const app = express().use(bodyParser.json());
 // ==========================================================
 
 // Ataovy ao anatin'ny " " ny Token d'accès-nao
-const PAGE_ACCESS_TOKEN = "EAAZAmTDoEiBYBQZAw3Po3MNLD2U6ROZCoGPsWpge33G2iIvHJ13UkyZBVr2nqnLcEVtY7EcXOBZBZBN2vojZCzuTSUbmPHA67Qk9tfKkdYe0h09qzGeWBg8rrsPkdS79JlR5zzhuMDAca16xZC6kZB8DRr9ag7yZB7Nu762vaI3scZAdxNhwCWgSN7mowmaQp1HEwmbfn2S9fp2M58Pb1cZArOk94F3OKA8x8V5RPD81S6yB4AAQ";
+const PAGE_ACCESS_TOKEN = "TOKEN D'ACCES  : EAAZAmTDoEiBYBQZAw3Po3MNLD2U6ROZCoGPsWpge33G2iIvHJ13UkyZBVr2nqnLcEVtY7EcXOBZBZBN2vojZCzuTSUbmPHA67Qk9tfKkdYe0h09qzGeWBg8rrsPkdS79JlR5zzhuMDAca16xZC6kZB8DRr9ag7yZB7Nu762vaI3scZAdxNhwCWgSN7mowmaQp1HEwmbfn2S9fp2M58Pb1cZArOk94F3OKA8x8V5RPD81S6yB4AAQ
+
+NOM D'APPLICATION: ASA EN LIGNE MADAGASCAR 
+
+App secret : f5c58e206fbc9db7290a18a2bf0eb293
+
+ID d'application :1801327437187094
+
+
+API 
+
+EAAZAmTDoEiBYBQTmnKYl7ronQQX1r5dyZAlnYJDjb91HyxZCZAHk978HrvBD5ZA5XvpsnstZBS4Mr2d1r0SuPAhinB2Hk8ma7xEswA2J6QKhZBlvGoMI1mizkiJh2L9uWb8H24iTWa5iq6m5ey1Ic9uoPpBlRTuglst8YWh0khBlshHUGD6gZBVJjZCPeTWyuivZCZABaw0Ltz6XmZCNDuuHa2BYdqedxuuriR5eKuwJ9PNh1BbZC9Uy3JYzrkgZDZD";
 
 // Ataovy ao anatin'ny " " ny App Secret-nao
 const APP_SECRET = "f5c58e206fbc9db7290a18a2bf0eb293";
 
 // Ataovy ao anatin'ny " " ny Page ID-nao
-const PAGE_ID = "1801327437187094";
+const PAGE_ID = "405569205968014";
 
 // Mamoròna teny iray tianao eto (ohatra: "BOT_TEST_2026")
 // Io teny io no ampidirinao ao amin'ny Dashboard Facebook any aoriana
