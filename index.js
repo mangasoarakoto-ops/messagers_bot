@@ -5,36 +5,24 @@ const axios = require('axios');
 const app = express().use(bodyParser.json());
 
 // ==========================================================
-// 1. CONFIGURATION: AMPIDIRO ETO NY NY ANAO
+// 1. CONFIGURATION: NODIOVINA NY TOKEN SY NY ID
 // ==========================================================
 
-// Ataovy ao anatin'ny " " ny Token d'accès-nao
-const PAGE_ACCESS_TOKEN = "TOKEN D'ACCES  : EAAZAmTDoEiBYBQZAw3Po3MNLD2U6ROZCoGPsWpge33G2iIvHJ13UkyZBVr2nqnLcEVtY7EcXOBZBZBN2vojZCzuTSUbmPHA67Qk9tfKkdYe0h09qzGeWBg8rrsPkdS79JlR5zzhuMDAca16xZC6kZB8DRr9ag7yZB7Nu762vaI3scZAdxNhwCWgSN7mowmaQp1HEwmbfn2S9fp2M58Pb1cZArOk94F3OKA8x8V5RPD81S6yB4AAQ
+// Ny Token-nao (ilay API farany nalefanao no nalaiko)
+const PAGE_ACCESS_TOKEN = "EAAZAmTDoEiBYBQTmnKYl7ronQQX1r5dyZAlnYJDjb91HyxZCZAHk978HrvBD5ZA5XvpsnstZBS4Mr2d1r0SuPAhinB2Hk8ma7xEswA2J6QKhZBlvGoMI1mizkiJh2L9uWb8H24iTWa5iq6m5ey1Ic9uoPpBlRTuglst8YWh0khBlshHUGD6gZBVJjZCPeTWyuivZCZABaw0Ltz6XmZCNDuuHa2BYdqedxuuriR5eKuwJ9PNh1BbZC9Uy3JYzrkgZDZD";
 
-NOM D'APPLICATION: ASA EN LIGNE MADAGASCAR 
-
-App secret : f5c58e206fbc9db7290a18a2bf0eb293
-
-ID d'application :1801327437187094
-
-
-API 
-
-EAAZAmTDoEiBYBQTmnKYl7ronQQX1r5dyZAlnYJDjb91HyxZCZAHk978HrvBD5ZA5XvpsnstZBS4Mr2d1r0SuPAhinB2Hk8ma7xEswA2J6QKhZBlvGoMI1mizkiJh2L9uWb8H24iTWa5iq6m5ey1Ic9uoPpBlRTuglst8YWh0khBlshHUGD6gZBVJjZCPeTWyuivZCZABaw0Ltz6XmZCNDuuHa2BYdqedxuuriR5eKuwJ9PNh1BbZC9Uy3JYzrkgZDZD";
-
-// Ataovy ao anatin'ny " " ny App Secret-nao
+// Ny App Secret-nao
 const APP_SECRET = "f5c58e206fbc9db7290a18a2bf0eb293";
 
-// Ataovy ao anatin'ny " " ny Page ID-nao
+// Ny Page ID-nao (Asa En Ligne Madagascar)
 const PAGE_ID = "405569205968014";
 
-// Mamoròna teny iray tianao eto (ohatra: "BOT_TEST_2026")
-// Io teny io no ampidirinao ao amin'ny Dashboard Facebook any aoriana
+// Ny Verify Token (Ity no soratanao ao amin'ny Facebook Dashboard)
 const VERIFY_TOKEN = "bot_messangers";
 
 // ==========================================================
 
-// --- VERIFICATION NY WEBHOOK (Ho an'ny Facebook Dashboard) ---
+// --- VERIFICATION NY WEBHOOK ---
 app.get('/webhook', (req, res) => {
     let mode = req.query['hub.mode'];
     let token = req.query['hub.verify_token'];
@@ -50,18 +38,19 @@ app.get('/webhook', (req, res) => {
     }
 });
 
-// --- MANDRAY NY MESSAGE AVY AMIN'NY MPAMAKY ---
+// --- MANDRAY NY MESSAGE ---
 app.post('/webhook', (req, res) => {
     let body = req.body;
 
     if (body.object === 'page') {
         body.entry.forEach(function(entry) {
-            let webhook_event = entry.messaging[0];
-            let sender_psid = webhook_event.sender.id;
+            if (entry.messaging && entry.messaging[0]) {
+                let webhook_event = entry.messaging[0];
+                let sender_psid = webhook_event.sender.id;
 
-            if (webhook_event.message && webhook_event.message.text) {
-                // Eto no manoratra ny valin-teny automatique
-                handleMessage(sender_psid, webhook_event.message.text);
+                if (webhook_event.message && webhook_event.message.text) {
+                    handleMessage(sender_psid, webhook_event.message.text);
+                }
             }
         });
         res.status(200).send('EVENT_RECEIVED');
@@ -70,7 +59,7 @@ app.post('/webhook', (req, res) => {
     }
 });
 
-// --- LOGIQUE HAMALIANA NY MESSAGE ---
+// --- LOGIQUE HAMALIANA ---
 async function handleMessage(sender_psid, received_message) {
     let response;
     let msgText = received_message.toLowerCase();
@@ -86,7 +75,7 @@ async function handleMessage(sender_psid, received_message) {
     sendApiRequest(sender_psid, response);
 }
 
-// --- MANDREFA NY VALINY ANY AMIN'NY MESSENGER ---
+// --- MANDREFA VALINY ---
 async function sendApiRequest(sender_psid, response) {
     try {
         await axios.post(`https://graph.facebook.com/v12.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
@@ -95,7 +84,12 @@ async function sendApiRequest(sender_psid, response) {
         });
         console.log('Message sent back to user!');
     } catch (error) {
-        console.error('Error sending message: ' + error.response.data.error.message);
+        // Raha misy erreur dia hita ao amin'ny Logs
+        if (error.response) {
+            console.error('Error Details:', error.response.data.error.message);
+        } else {
+            console.error('Error sending message:', error.message);
+        }
     }
 }
 
